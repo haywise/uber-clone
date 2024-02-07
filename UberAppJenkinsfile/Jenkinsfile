@@ -56,7 +56,6 @@ pipeline{
                        sh "docker build -t uberapp ."
                        sh "docker tag uberapp haywise/uberapp:latest "
                        sh "docker push haywise/uberapp:latest "
-                       sh "docker rmi haywise/uberapp:latest "
                     }
                 }
             }
