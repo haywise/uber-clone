@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: uber-deployment
+  name: uberapp-deployment
 spec:
   replicas: 1  # Number of desired replicas
   selector:
     matchLabels:
-      app: uber
+      app: uberapp
   template:
     metadata:
       labels:
-        app: uber
+        app: uberapp
     spec:
       containers:
-      - name: uber
-        image: tkibnyusuf/uber:latest
+      - name: uberapp
+        image: haywise/uberapp:latest
         ports:
         - containerPort: 3000  # Port your application listens on
 
