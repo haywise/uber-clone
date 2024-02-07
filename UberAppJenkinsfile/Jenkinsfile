@@ -21,7 +21,7 @@ pipeline{
             steps{
                 withSonarQubeEnv('sonar') {
                     sh ''' $SCANNER_HOME/bin/sonar_scanner -Dsonar.projectName=DevsecOp_project \
-                    -Dsonar.projectKey=DevsecOp_project '''
+                    -Dsonar.projectKey=DevsecOp_project -Dsonar.java.binaries=. '''
                 }
             }
         }
