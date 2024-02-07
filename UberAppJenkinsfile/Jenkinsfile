@@ -14,7 +14,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/haywise/uber-clone.git'
+                git branch: 'main', url: 'https://github.com/haywise/uberapp-clone.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -53,23 +53,23 @@ pipeline{
             steps{
                 script{
                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
-                       sh "docker build -t uber ."
-                       sh "docker tag uber tkibnyusuf/uber:latest "
-                       sh "docker push tkibnyusuf/uber:latest "
+                       sh "docker build -t uberapp ."
+                       sh "docker tag uberapp haywise/uberapp:latest "
+                       sh "docker push haywise/uberapp:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image tkibnyusuf/uber:latest > trivyimage.json"
+                sh "trivy image haywise/uberapp:latest > trivyimage.json"
             }
         }        
-        stage('Deploy to kubernetes'){
+        stage('Deploy to kuberappnetes'){
             steps{
                 script{
                     dir('K8S') {
-                       withKubeConfig(caCertificate: '', clusterName: 'EKS_CLOUD', contextName: '', credentialsId: 'k8s', namespace: 'uberapp', restrictKubeConfigAccess: false, serverUrl: 'https://BB5C219F0F374D6AEA1D7AACE667B191.gr7.us-east-1.eks.amazonaws.com') {
+                       withKubeConfig(caCertificate: '', clusterName: 'EKS_CLOUD', contextName: '', credentialsId: 'k8s', namespace: 'uberappapp', restrictKubeConfigAccess: false, serverUrl: 'https://BB5C219F0F374D6AEA1D7AACE667B191.gr7.us-east-1.eks.amazonaws.com') {
                                 sh 'kubectl apply -f deployment.yml'
                                 sh 'kubectl apply -f service.yml'
                         }
